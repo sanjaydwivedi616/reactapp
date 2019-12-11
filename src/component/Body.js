@@ -17,7 +17,7 @@ class Body extends Component {
     render(){
         return (
             <div>
-                 <h1 > Hello {this.state.massage}</h1>
+                 <h1> Hello {this.state.massage}</h1>
                 <button onClick={() => this.changetext()}>Click Me!</button>
             </div>
         )
