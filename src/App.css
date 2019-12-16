@@ -1,6 +1,10 @@
 .footer-copyright {
-  background: #222;
+  background: #343a40!important;
   padding: 5px 0;
   text-align: center;
   color: #fff;
+}
+
+.footer-copyright p{
+  margin: 10px 0 10px 0 !important;
 }

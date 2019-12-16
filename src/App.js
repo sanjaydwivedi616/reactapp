@@ -1,5 +1,5 @@
 import React from "react";
-import {Switch, Route, Router} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
@@ -12,13 +12,13 @@ import PageNotFound from "./component/Page-Not-Found";
 function App() {
   return (
     <div className="App">
-      <Header name="sanjay" age="23"></Header>
-      <switch>
-          <Route exact path="/" component={ProductList}></Route>
-          <Route path="/ProductDetails" component={ProductDetails}></Route>
-          <Route path="/Cart" component={Cart}></Route>
-          <Route component={PageNotFound}></Route>
-      </switch>
+      <Header></Header>
+      <Switch>
+        <Route exact path="/" component={ProductList}></Route>
+        <Route path="/ProductDetails" component={ProductDetails}></Route>
+        <Route path="/Cart" component={Cart}></Route>
+        <Route component={PageNotFound}></Route>
+      </Switch>
       <Footer></Footer>
     </div>
   );
