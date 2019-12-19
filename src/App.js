@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, } from "react-router-dom";
 import "./App.css";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
@@ -8,6 +8,7 @@ import ProductList from "./component/Product-list";
 import ProductDetails from "./component/Product-details";
 import Cart from "./component/Cart";
 import PageNotFound from "./component/Page-Not-Found";
+import Userpost from "./component/Userpost";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={ProductList}></Route>
         <Route path="/ProductDetails" component={ProductDetails}></Route>
+        <Route path="/Userpost" component={Userpost}></Route>
         <Route path="/Cart" component={Cart}></Route>
         <Route component={PageNotFound}></Route>
       </Switch>

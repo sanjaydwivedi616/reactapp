@@ -1,10 +1,35 @@
+.userData {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  border: 1px solid gray;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0px 0px 3px 0px grey;
+  text-align: center;
+}
+.userData img {
+  display: block;
+  margin: auto;
+  height: 200px;
+  width: 200px;
+}
+.userData p{
+  margin-bottom: 0px;
+}
+.errormsg{
+  color: red;
+  font-size: 30px;
+  text-align: center;
+}
 .footer-copyright {
-  background: #343a40!important;
+  background: #343a40 !important;
   padding: 5px 0;
   text-align: center;
   color: #fff;
+  margin-top: 20px;
 }
-
-.footer-copyright p{
+.footer-copyright p {
   margin: 10px 0 10px 0 !important;
 }

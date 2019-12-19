@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   render() {
@@ -13,6 +13,9 @@ class Header extends Component {
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/ProductDetails">Product Details</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/Userpost">User Posts</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/Cart">Cart <span className="fa fa-shopping-cart"></span></Link>
