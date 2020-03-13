@@ -4,21 +4,17 @@ import "./App.css";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
-import ProductList from "./component/Product-list";
-import ProductDetails from "./component/Product-details";
-import Cart from "./component/Cart";
+import UserPostDetails from "./component/UserPostDetails";
 import PageNotFound from "./component/Page-Not-Found";
-import Userpost from "./component/Userpost";
+import users from "./component/Users";
 
 function App() {
   return (
     <div className="App">
       <Header></Header>
       <Switch>
-        <Route exact path="/" component={ProductList}></Route>
-        <Route path="/ProductDetails" component={ProductDetails}></Route>
-        <Route path="/Userpost" component={Userpost}></Route>
-        <Route path="/Cart" component={Cart}></Route>
+        <Route exact path="/" component={users}></Route>
+        <Route path="/UserPostDetails" component={UserPostDetails}></Route>
         <Route component={PageNotFound}></Route>
       </Switch>
       <Footer></Footer>

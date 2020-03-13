@@ -1,42 +1,46 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from "axios"
 
-class Userpost extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userPosts: [],
-      errormsg : ''
-    };
+class UserPost extends Component {
+  state = {
+    posts: []
   }
-  componentDidMount() {
-    axios
-      .get("https://reqres.in/api/users?page=1")
-      .then(response => {
-        console.log(response);
-        this.setState({ userPosts: response.data.data });
+
+  userPostList = (id) => {
+    axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`).then(resulet => {
+      this.setState({
+        posts: resulet.data
       })
-      .catch(error => {
-        this.setState({errormsg: "We are not fatching any data"});
-      });
+    })
   }
-  render() {  
-    const { userPosts,errormsg } = this.state;
+
+  componentDidMount() {
+    const { user } = this.props;
+    this.userPostList(user.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.user.id !== this.props.user.id) {
+      this.userPostList(this.props.user.id)
+    }
+  }
+  render() {
+    const { posts } = this.state;
     return (
-      <div className="container">
-        {userPosts.length
-          ? userPosts.map(userPost => (
-              <div className="userData" key={userPost.id}>
-                <img src={userPost.avatar}></img>
-                <p><b>{userPost.first_name} {userPost.last_name}</b></p>
-                <p>{userPost.email}</p>
+      <div>
+        {posts.map(post => {
+          return (
+            <div key={post.id} class="card">
+              <div class="card-body">
+                <h5 class="card-title">{post.title}</h5>
+                <hr />
+                <p class="card-text">{post.body}</p>
               </div>
-            ))
-          : null}
-          { errormsg ? <div className="errormsg">{errormsg}</div>: null }
+            </div>
+          )
+        })}
       </div>
-    );
+    )
   }
 }
-
-export default Userpost;
+export default UserPost;

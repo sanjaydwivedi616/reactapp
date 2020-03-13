@@ -33,3 +33,16 @@
 .footer-copyright p {
   margin: 10px 0 10px 0 !important;
 }
+
+.main-div {
+  margin: 25px;
+}
+.button {
+  padding: 0px 5px;
+  background: #1c8856;
+  color: #fff;
+  border: 1px solid #1c8856;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-right: 5px;
+}
