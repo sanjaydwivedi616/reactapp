@@ -1,18 +1,20 @@
-import React, { Component } from "react";
-import axios from "axios"
+import React, { Component } from 'react';
+import axios from 'axios';
 
-class UserPost extends Component {
+class Userpost extends Component {
   state = {
     posts: []
-  }
+  };
 
-  userPostList = (id) => {
-    axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`).then(resulet => {
-      this.setState({
-        posts: resulet.data
-      })
-    })
-  }
+  userPostList = id => {
+    axios
+      .get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
+      .then(resulet => {
+        this.setState({
+          posts: resulet.data
+        });
+      });
+  };
 
   componentDidMount() {
     const { user } = this.props;
@@ -21,7 +23,7 @@ class UserPost extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.user.id !== this.props.user.id) {
-      this.userPostList(this.props.user.id)
+      this.userPostList(this.props.user.id);
     }
   }
   render() {
@@ -30,17 +32,17 @@ class UserPost extends Component {
       <div>
         {posts.map(post => {
           return (
-            <div key={post.id} class="card">
-              <div class="card-body">
-                <h5 class="card-title">{post.title}</h5>
+            <div key={post.id} class='card'>
+              <div class='card-body'>
+                <h5 class='card-title'>{post.title}</h5>
                 <hr />
-                <p class="card-text">{post.body}</p>
+                <p class='card-text'>{post.body}</p>
               </div>
             </div>
-          )
+          );
         })}
       </div>
-    )
+    );
   }
 }
-export default UserPost;
+export default Userpost;
