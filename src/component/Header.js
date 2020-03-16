@@ -16,8 +16,11 @@ class Header extends Component {
               <Link className="nav-link" to="/UserPostDetails">User Posts</Link>
             </li>
             <li className="nav-item">
+              <Link className="nav-link" to="/Product">Products</Link>
+            </li> 
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/Cart">Cart <span className="fa fa-shopping-cart"></span></Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </nav>

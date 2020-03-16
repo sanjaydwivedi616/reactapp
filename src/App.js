@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import UserPostDetails from "./component/UserPostDetails";
 import PageNotFound from "./component/Page-Not-Found";
 import users from "./component/Users";
+import Product from "./component/Product";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={users}></Route>
         <Route path="/UserPostDetails" component={UserPostDetails}></Route>
+        <Route path="/Product" component={Product}></Route>
         <Route component={PageNotFound}></Route>
       </Switch>
       <Footer></Footer>

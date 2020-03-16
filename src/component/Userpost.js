@@ -3,15 +3,20 @@ import axios from 'axios';
 
 class Userpost extends Component {
   state = {
-    posts: []
+    posts: [],
+    loader: false
   };
 
   userPostList = id => {
+    this.setState({
+      loader: true
+    })
     axios
       .get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
       .then(resulet => {
         this.setState({
-          posts: resulet.data
+          posts: resulet.data,
+          loader: false
         });
       });
   };
@@ -27,20 +32,27 @@ class Userpost extends Component {
     }
   }
   render() {
-    const { posts } = this.state;
+    const { posts, loader } = this.state;
     return (
       <div>
-        {posts.map(post => {
-          return (
-            <div key={post.id} class='card'>
-              <div class='card-body'>
-                <h5 class='card-title'>{post.title}</h5>
-                <hr />
-                <p class='card-text'>{post.body}</p>
-              </div>
+        {loader ? (
+          `Loadding post for ${this.props.user.name}...`
+        ) : (
+            <div>
+              {posts.map(post => {
+                return (
+                  <div key={post.id} className='card'>
+                    <div className='card-body'>
+                      <h5 className='card-title'>{post.title}</h5>
+                      <hr />
+                      <p className='card-text'>{post.body}</p>
+                    </div>
+                  </div>
+
+                );
+              })}
             </div>
-          );
-        })}
+          )}
       </div>
     );
   }
