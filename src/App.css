@@ -52,3 +52,6 @@
 .list-group-item{
   cursor: pointer;
 }
+.card-title{
+  text-transform: capitalize;
+}

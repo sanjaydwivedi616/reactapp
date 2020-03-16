@@ -6,19 +6,17 @@ class Userpost extends Component {
     posts: [],
     loader: false
   };
-
-  userPostList = id => {
+  
+  userPostList = async (id) => {
     this.setState({
       loader: true
     })
-    axios
-      .get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
-      .then(resulet => {
-        this.setState({
-          posts: resulet.data,
-          loader: false
-        });
-      });
+    let res = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
+    let  postData  = res.data;
+    this.setState({
+      posts: postData,
+      loader: false
+    });
   };
 
   componentDidMount() {
