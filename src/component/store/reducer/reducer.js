@@ -1,18 +1,17 @@
-import actionType from "../constant/constant"
 
-const userData = {
-    userName: "sanjay",
-    age: 28,
-    profetion: "Software Engineer"
-}
+const users = ["sanjay", "rahul", "mohan"];
 
-export default (states = userData, action) => {
+const user = (state = users, action) => {
     switch (action.type) {
-        case actionType.changeUserName : return({
-            ...states,
-            userName : action.payload
-        })
+        case "Add_User":
+            return [...state, action.payload];
+
+        case "Remove_User":
+            return state.filter((item, index) => action.index !== index);
+
         default:
-            return states;
+            return state;
     }
 }
+
+export default user;

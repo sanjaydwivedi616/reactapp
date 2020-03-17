@@ -1,76 +1,56 @@
 import React, { Component } from "react";
-import DatePicker from "react-datepicker";
-import { addDays } from 'date-fns';
-import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux"
-import { changeState } from "./store/action/action"
+import { AddUser, RemoveUser } from "./store/action/action"
 
 class Product extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fromDate: "",
-      toDate: "",
-      hello: "",
-      userName: ""
+      users: ""
     };
   }
-  fromDateChange = fromDate => {
-    this.setState({
-      fromDate: fromDate,
-      toDate: "",
-    });
-    const fromhello = fromDate;
-    const tohello = new Date();
-    const diffTime = Math.abs(tohello - fromhello);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    alert(diffDays)
-    this.setState({
-      hello: diffDays - 1
-    });
 
-  }
-  toDateChange = toDate => {
-    this.setState({
-      toDate: toDate
-    });
-  };
-  changeState = () => {
-    if(this.state.userName === ""){
+  updateUserList = (event) => {
+    event.preventDefault();
+    if (this.state.users === "") {
       return false
     }
-    this.props.changeStateToReducer(this.state.userName)
+    this.props.addUserData(this.state.users)
     this.setState({
-      userName: ""
+      users: ""
     })
+  }
+
+  removeItems = (index) => {
+    const userDelete = window.confirm("Do you want Delete this user ?");
+    if (userDelete == true) {
+      this.props.removeData(index)
+    } else {
+      return false;
+    }
   }
   changeUserInput(event) {
     this.setState({
-      userName: event.target.value
+      users: event.target.value
     })
+  }
+  validation(){
+    alert(12123)
   }
   render() {
     return (
       <div>
-        <div>
-          <p>{this.props.userNames} and my age is {this.props.userAge} </p>
-          <input type="text" value={this.state.userName} onChange={this.changeUserInput.bind(this)} />
-          <button onClick={this.changeState} >Change State</button>
-        </div>
-
-        <DatePicker className="form-control" dateFormat="yyyy/MM/dd"
-          selected={this.state.fromDate}
-          onChange={this.fromDateChange} maxDate={new Date()}
-          minDate={addDays(new Date(), -180)}
-          placeholderText="YYYY/MM/DD"
-        />
-
-        <DatePicker className="form-control" dateFormat="yyyy/MM/dd"
-          selected={this.state.toDate}
-          onChange={this.toDateChange} maxDate={new Date()}
-          minDate={addDays(new Date(), -this.state.hello)}
-          placeholderText="YYYY/MM/DD"
-        />
+        <form onSubmit={this.updateUserList}>
+          <input type="text" value={this.state.users} onChange={this.changeUserInput.bind(this)} onKeyPress={()=>this.validation()}/>
+          <button type="submit" >Add User</button>
+        </form>
+        <ul>
+          {this.props.users.map((item, index) => {
+            return (
+              <li key={index}>{item} <button onClick={() => this.removeItems(index)}>X</button></li>
+            )
+          })}
+        </ul>
       </div>
     );
   }
@@ -79,15 +59,17 @@ class Product extends Component {
 
 function mapStateToProps(state) {
   return ({
-    userNames: state.rootReducer.userName,
-    userAge: state.rootReducer.age,
+    users: state.users,
   })
 }
 
 function mapdispatchToProps(dispatch) {
   return ({
-    changeStateToReducer: (updatedUserName) => {
-      dispatch(changeState(updatedUserName))
+    addUserData: (updateduserName) => {
+      dispatch(AddUser(updateduserName))
+    },
+    removeData: (index) => {
+      dispatch(RemoveUser(index))
     }
   })
 }

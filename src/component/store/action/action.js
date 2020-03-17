@@ -1,10 +1,14 @@
-import actionType from "../constant/constant"
 
-export function changeState(updatedUserName) {
-    return dispatch => {
-        dispatch({
-            type: actionType.changeUserName,
-            payload: updatedUserName
-        })
+export const AddUser = data => {
+    return {
+        type: 'Add_User',
+        payload: data
+    }
+}
+
+export const RemoveUser = index => {
+    return {
+        type: 'Remove_User',
+        index
     }
 }

@@ -15,8 +15,8 @@ function App() {
       <Header></Header>
       <Switch>
         <Route exact path="/" component={users}></Route>
-        <Route path="/UserPostDetails" component={UserPostDetails}></Route>
-        <Route path="/Product" component={Product}></Route>
+        <Route exact path="/UserPostDetails" component={UserPostDetails}></Route>
+        <Route exact path="/Product" component={Product}></Route>
         <Route component={PageNotFound}></Route>
       </Switch>
       <Footer></Footer>

@@ -17,7 +17,7 @@ class Users extends Component {
         this.setState({ userPosts: response.data.data });
       })
       .catch(error => {
-        this.setState({errormsg: "We are not fatching any data"});
+        this.setState({errormsg: `${error} We are not fatching any data`});
       });
   }
   render() {  
