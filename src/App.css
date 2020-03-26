@@ -15,10 +15,10 @@
   height: 200px;
   width: 200px;
 }
-.userData p{
+.userData p {
   margin-bottom: 0px;
 }
-.errormsg{
+.errormsg {
   color: red;
   font-size: 30px;
   text-align: center;
@@ -33,25 +33,54 @@
 .footer-copyright p {
   margin: 10px 0 10px 0 !important;
 }
-
 .main-div {
   margin: 25px;
 }
-.button {
-  padding: 0px 5px;
-  background: #1c8856;
+.table thead th {
+  background: #007bff;
   color: #fff;
-  border: 1px solid #1c8856;
-  border-radius: 5px;
-  font-size: 12px;
-  margin-right: 5px;
+}
+.table td,
+.table th {
+  padding: 10px;
+}
+button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 5px !important;
+  margin-right: 10px !important;
+}
+button[disabled] {
+  cursor: not-allowed;
+  background: #a4a4a4;
+}
+.delete {
+  background: #e40404;
 }
 .navbar {
   margin-bottom: 20px;
 }
-.list-group-item{
+.list-group-item {
   cursor: pointer;
 }
-.card-title{
+.card-title {
   text-transform: capitalize;
+}
+.card {
+  margin-bottom: 20px;
+}
+.loaderBackground {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transform: translateZ(0);
+  background: #585858b0;
+}
+::selection {
+  background-color: #e259dec7;
 }

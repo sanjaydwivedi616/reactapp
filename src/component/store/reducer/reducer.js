@@ -1,9 +1,12 @@
 
-const users = ["sanjay", "rahul", "mohan"];
+const users = ["Sanjay", "Rahul", "Mohan"];
 
 const user = (state = users, action) => {
     switch (action.type) {
         case "Add_User":
+            return [...state, action.payload];
+
+        case "Edit_User":
             return [...state, action.payload];
 
         case "Remove_User":

@@ -6,7 +6,7 @@ class Users extends Component {
     super(props);
     this.state = {
       userPosts: [],
-      errormsg : ''
+      errormsg: ''
     };
   }
   componentDidMount() {
@@ -17,23 +17,23 @@ class Users extends Component {
         this.setState({ userPosts: response.data.data });
       })
       .catch(error => {
-        this.setState({errormsg: `${error} We are not fatching any data`});
+        this.setState({ errormsg: `${error} We are not fatching any data` });
       });
   }
-  render() {  
-    const { userPosts,errormsg } = this.state;
+  render() {
+    const { userPosts, errormsg } = this.state;
     return (
       <div className="container">
         {userPosts.length
           ? userPosts.map(userPost => (
-              <div className="userData" key={userPost.id}>
-                <img src={userPost.avatar}></img>
-                <p><b>{userPost.first_name} {userPost.last_name}</b></p>
-                <p>{userPost.email}</p>
-              </div>
-            ))
+            <div className="userData" key={userPost.id}>
+              <img src={userPost.avatar} alt={userPost.first_name}></img>
+              <p><b>{userPost.first_name} {userPost.last_name}</b></p>
+              <p>{userPost.email}</p>
+            </div>
+          ))
           : null}
-          { errormsg ? <div className="errormsg">{errormsg}</div>: null }
+        {errormsg ? <div className="errormsg">{errormsg}</div> : null}
       </div>
     );
   }

@@ -12,7 +12,7 @@ class Userpost extends Component {
       loader: true
     })
     let responce = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
-    let  postData  = responce.data;
+    let postData = responce.data;
     this.setState({
       posts: postData,
       loader: false
@@ -34,7 +34,7 @@ class Userpost extends Component {
     return (
       <div>
         {loader ? (
-          `Loadding post for ${this.props.user.name}...`
+          <div className="loaderBackground">Loadding post for {this.props.user.name}...</div>
         ) : (
             <div>
               {posts.map(post => {

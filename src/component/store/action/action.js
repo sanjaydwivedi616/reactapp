@@ -12,3 +12,10 @@ export const RemoveUser = index => {
         index
     }
 }
+
+export const EditUser = index => {
+    return {
+        type: 'Edit_User',
+        index
+    }
+}

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import axios from 'axios';
-import UserPost from './Userpost';
+const UserPost = lazy(() => import("./Userpost"));
 
 class UserPostDetails extends Component {
   state = {
@@ -30,7 +30,7 @@ class UserPostDetails extends Component {
         <div className='row'>
           <div className='col-sm-6'>
             {users.length === 0 ? (
-              'Loadding...'
+              <div className="loaderBackground">Loadding...</div>
             ) : (
                 <ul className='list-group'>
                   {users.map(user => {
@@ -49,7 +49,9 @@ class UserPostDetails extends Component {
               )}
           </div>
           <div className='col-sm-6'>
-            {selectedUser !== null ? <UserPost user={selectedUser} /> : null}
+            <Suspense fallback={<div>Loading...</div>}>
+              {selectedUser !== null ? <UserPost user={selectedUser} /> : null}
+            </Suspense>
           </div>
         </div>
       </div>

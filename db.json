@@ -1,0 +1,34 @@
+{
+  "todos": [
+    {
+      "id": 0.47961688446727124,
+      "name": "Sanjay",
+      "email": "sanjay@gamil.com",
+      "mobile": "2323232323",
+      "DOB": "26/3/2020",
+      "gender": "Male",
+      "nationality": "Finnish",
+      "edited": true
+    },
+    {
+      "id": 0.5286320142536192,
+      "name": "Rahul",
+      "email": "rahul@gmail.com",
+      "mobile": "8867989295",
+      "DOB": "24/3/2020",
+      "gender": "Male",
+      "nationality": "Indian",
+      "edited": false
+    },
+    {
+      "id": 0.30372208261909917,
+      "name": "Preetu",
+      "email": "preetu@gamil.com",
+      "mobile": "2323232323",
+      "DOB": "1/10/2019",
+      "gender": "Female",
+      "nationality": "British",
+      "edited": true
+    }
+  ]
+}
