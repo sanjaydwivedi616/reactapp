@@ -8,8 +8,8 @@ class Header extends Component {
         <Link className="navbar-brand" to="/">Dashbord</Link>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            
-          <li className="nav-item">
+
+            <li className="nav-item">
               <Link className="nav-link" to="/">User</Link>
             </li>
             <li className="nav-item">
@@ -17,7 +17,7 @@ class Header extends Component {
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/Product">Products</Link>
-            </li> 
+            </li>
             {/* <li className="nav-item">
               <Link className="nav-link" to="/Cart">Cart <span className="fa fa-shopping-cart"></span></Link>
             </li> */}

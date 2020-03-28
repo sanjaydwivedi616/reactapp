@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux"
-import { AddUser, RemoveUser, EditUser } from "./store/action/action"
 import axios from "axios";
-
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { connect } from "react-redux"
+import { fetchUsers } from '../redux'
 
 class Product extends Component {
   constructor(props) {
@@ -22,12 +20,8 @@ class Product extends Component {
       editing: false,
     };
   }
-
-  async getUserList() {
-    let result = await axios.get(`http://localhost:3333/todos`);
-    this.setState({
-      users: result.data
-    })
+  getUserList() {
+    this.props.fetchUsers();
   }
 
   addUserInTheList = (event) => {
@@ -175,6 +169,7 @@ class Product extends Component {
 
   render() {
     const { users, editing } = this.state;
+    const { userData } = this.props
     return (
       <div>
         {editing ?
@@ -302,7 +297,7 @@ class Product extends Component {
             </tr>
           </thead>
           <tbody>
-            {users.length > 0 ? users.map((user, index) => {
+            {userData.users.length > 0 ? userData.users.map((user, index) => {
               return (
                 <tr key={user.id}>
                   <td>{index + 1}.</td>
@@ -330,24 +325,20 @@ class Product extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return ({
-    users: state.users,
-  })
+const mapStateToProps = state => {
+  return {
+    userData: state.user,
+    loading: state.loading
+  }
 }
 
-function mapdispatchToProps(dispatch) {
-  return ({
-    addUserData: (updateduserName) => {
-      dispatch(AddUser(updateduserName))
-    },
-    removeData: (index) => {
-      dispatch(RemoveUser(index))
-    },
-    editData: (index) => {
-      dispatch(EditUser(index))
-    }
-  })
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchUsers: () => dispatch(fetchUsers())
+  }
 }
 
-export default connect(mapStateToProps, mapdispatchToProps)(Product);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Product);
