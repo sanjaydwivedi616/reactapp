@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux"
 import { fetchUsers } from '../redux'
+import AddUser from "./AddUser"
 
 class Product extends Component {
   constructor(props) {
@@ -24,40 +25,6 @@ class Product extends Component {
     this.props.fetchUsers();
   }
 
-  addUserInTheList = (event) => {
-    event.preventDefault();
-    const user = this.state;
-    if (user.newUserName === "" || user.newUserEmail === "" || user.newUserMobile === "") {
-      return false
-    }
-    this.state.users.map(elem => {
-      if (elem.email === user.newUserEmail) {
-        return false;
-      }
-    });
-    let UserDOB = this.state.fromDate.getDate() + "/" + (this.state.fromDate.getMonth() + 1) + "/" + this.state.fromDate.getFullYear();
-    axios.post("http://localhost:3333/todos/", {
-      id: Math.random(),
-      name: this.state.newUserName,
-      email: this.state.newUserEmail,
-      mobile: this.state.newUserMobile,
-      DOB: UserDOB,
-      gender: this.state.newUserGender,
-      nationality: this.state.newUserNationality,
-      edited: false,
-    }).then(result => {
-      this.setState({
-        newUserName: "",
-        newUserEmail: "",
-        newUserMobile: "",
-        NewUserDOB: "",
-        newUserGender: "",
-        newUserNationality: "",
-      })
-      this.getUserList()
-    })
-  }
-
   deleteUserToList = (id) => {
     const userDelete = window.confirm("Do you want to Delete this user?");
     if (userDelete === true) {
@@ -70,7 +37,6 @@ class Product extends Component {
           newUserGender: "",
           newUserNationality: "",
           UpdateId: "",
-          editing: !this.state.editing,
         })
         this.getUserList();
       })
@@ -80,7 +46,7 @@ class Product extends Component {
   }
 
   editUserToList = (id) => {
-    this.state.users.map(user => {
+    this.props.userData.users.map(user => {
       if (id === user.id) {
         this.setState({
           editing: true,
@@ -89,7 +55,7 @@ class Product extends Component {
           newUserMobile: user.mobile,
           NewUserDOB: user.DOB,
           newUserGender: user.gender,
-          newUserNationality: user.nationality,
+          newUserNationality: user.address.nationality,
           UpdateId: user.id
         })
       }
@@ -129,7 +95,7 @@ class Product extends Component {
         newUserGender: "",
         newUserNationality: "",
         UpdateId: "",
-        editing: !this.state.editing,
+        editing: false,
       })
       this.getUserList()
     })
@@ -168,7 +134,7 @@ class Product extends Component {
   }
 
   render() {
-    const { users, editing } = this.state;
+    const { editing } = this.state;
     const { userData } = this.props
     return (
       <div>
@@ -229,59 +195,7 @@ class Product extends Component {
             </table>
           </form>
           :
-          <form onSubmit={this.addUserInTheList}>
-            <table className="table">
-              <tbody>
-                <tr>
-                  <td>
-                    <input className="form-control" type="text" name="newUserName" value={this.state.newUserName}
-                      onChange={this.changeUserInput} placeholder="Name"
-                    />
-                  </td>
-                  <td>
-                    <input className="form-control" type="Email" name="newUserEmail" value={this.state.newUserEmail}
-                      onChange={this.changeUserInput} placeholder="Email" />
-                  </td>
-                  <td>
-                    <input className="form-control" type="text" name="newUserMobile" value={this.state.newUserMobile}
-                      onChange={this.changeUserInput} placeholder="Mobile" />
-                  </td>
-                  <td>
-                    <DatePicker className="form-control" dateFormat="dd/MM/yyyy"
-                      selected={this.state.NewUserDOB}
-                      onChange={this.DOBChange} maxDate={new Date()}
-                      placeholderText="DD/MM/YYYY"
-                    />
-                  </td>
-                  <td>
-                    <select className="form-control" name="newUserGender"
-                      value={this.state.newUserGender}
-                      onChange={this.changeUserInput}>
-                      <option value=""></option>
-                      <option value="male">Male</option>
-                      <option value="Female">Female</option>
-                    </select>
-                  </td>
-                  <td>
-                    <select className="form-control" name="newUserNationality"
-                      value={this.state.newUserNationality}
-                      onChange={this.changeUserInput}>
-                      <option value=""></option>
-                      <option value="Indian">Indian</option>
-                      <option value="Denmark">Denmark</option>
-                      <option value="British">British</option>
-                      <option value="Estonian">Estonian</option>
-                      <option value="Finnish">Finnish</option>
-                      <option value="Iceland">Iceland</option>
-                    </select>
-                  </td>
-                  <td>
-                    <button type="submit">Add User</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
+          <AddUser />
         }
         <table className="table">
           <thead>
@@ -306,7 +220,7 @@ class Product extends Component {
                   <td>{user.mobile}</td>
                   <td>{user.DOB}</td>
                   <td>{user.gender}</td>
-                  <td>{user.nationality}</td>
+                  <td>{user.address.nationality}</td>
                   <td>
                     <button disabled={user.edited} onClick={() => this.editUserToList(user.id)}>Edit</button>
                     <button className="delete" onClick={() => this.deleteUserToList(user.id)}>X</button>
