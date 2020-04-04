@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { fetchUsers } from '../redux'
 
+
 function UsersContainer({ userData, fetchUsers }) {
 
-  function viewUserDetails(id) {
-    alert(id)
-  }
+  const [popUpModel, openModel] = useState(true);
+  const [selectedId, setSelectedId] = useState(0);
 
+  let viewUserDetails = (id) => {
+    openModel(false);
+    setSelectedId(id)
+  }
   useEffect(() => {
     fetchUsers();
   }, [])
@@ -41,9 +45,9 @@ function UsersContainer({ userData, fetchUsers }) {
                     <td>{user.mobile}</td>
                     <td>{user.DOB}</td>
                     <td>{user.gender}</td>
-                    <td>{user.nationality}</td>
+                    <td>{user.address.nationality}</td>
                     <td>
-                      <button onClick={() => viewUserDetails(user.id)}>View Details</button>
+                      <button data-toggle="modal" data-target="#myModal" onClick={() => viewUserDetails(user.id)}>View Details</button>
                     </td>
                   </tr>
                 )
@@ -54,6 +58,51 @@ function UsersContainer({ userData, fetchUsers }) {
               }
             </tbody>
           </table>
+
+          <div id="myModal" className="modal fade" role="dialog">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h6 style={{ color: "#FFF" }}>USER INFO</h6>
+                  <button type="button" className="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div className="modal-body">
+                  {userData.users.filter(users => users.id == selectedId).map(filteredPerson => (
+                    <table className="table">
+                      <tr>
+                        <td>Name</td>
+                        <td>{filteredPerson.name}</td>
+                        <td>Email</td>
+                        <td>{filteredPerson.email}</td>
+                        <td>Gender</td>
+                        <td>{filteredPerson.gender}</td>
+                      </tr>
+                      <tr>
+                        <td>DOB</td>
+                        <td>{filteredPerson.DOB}</td>
+                        <td>Mobile</td>
+                        <td>{filteredPerson.mobile}</td>
+                        <td>Country</td>
+                        <td>{filteredPerson.address.nationality}</td>
+                      </tr>
+
+                      <tr>
+                        <td>State</td>
+                        <td>{filteredPerson.address.state}</td>
+                        <td>City</td>
+                        <td>{filteredPerson.address.city}</td>
+                        <td>Street/Zip</td>
+                        <td>{filteredPerson.address.street} {filteredPerson.address.zipcode}</td>
+                      </tr>
+                    </table>
+                  ))}
+                </div>
+                <div className="modal-footer">
+                  <button type="button" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )
 }

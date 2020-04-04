@@ -37,12 +37,21 @@ class Product extends Component {
           newUserGender: "",
           newUserNationality: "",
           UpdateId: "",
+          editing: false
         })
         this.getUserList();
       })
     } else {
       return false;
     }
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.userData.users.length !== this.props.userData.users.length) {
+      this.props.fetchUsers();
+    } else {
+      return
+    }
+    //this.props.fetchUsers();
   }
 
   editUserToList = (id) => {
@@ -61,6 +70,7 @@ class Product extends Component {
       }
     })
   }
+
   cancleEditUser = () => {
     this.setState({
       newUserName: "",
@@ -72,6 +82,7 @@ class Product extends Component {
       editing: false,
     })
   }
+
   EditUserInTheList = (event) => {
     event.preventDefault();
     let id = this.state.UpdateId;
@@ -131,6 +142,12 @@ class Product extends Component {
 
   componentDidMount() {
     this.getUserList();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.userData.users.length !== this.props.userData.users.length) {
+      this.props.fetchUsers();
+    }
   }
 
   render() {
@@ -195,7 +212,7 @@ class Product extends Component {
             </table>
           </form>
           :
-          <AddUser />
+          <AddUser userlist={userData} />
         }
         <table className="table">
           <thead>

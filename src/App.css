@@ -24,11 +24,14 @@
   text-align: center;
 }
 .footer-copyright {
-  background: #343a40 !important;
+  background: #0e0f10 !important;
   padding: 5px 0;
   text-align: center;
   color: #fff;
   margin-top: 20px;
+}
+.nav-dark {
+  background-color: #0e0f10 !important;
 }
 .footer-copyright p {
   margin: 10px 0 10px 0 !important;
@@ -87,4 +90,28 @@ button[disabled] {
 }
 ::selection {
   background-color: #e259dec7;
+}
+.table td,
+.table th {
+  border: 1px solid #dee2e6 !important;
+}
+.modal-backdrop {
+  background-color: #00000047 !important;
+}
+.fade:not(.show) {
+  opacity: inherit !important;
+}
+.modal-header {
+  background-color: #007bff;
+  padding: 15px 0px 7px 17px !important;
+}
+.modal-footer {
+  padding: 7px !important;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 55% !important;
+    margin: 3.75rem auto !important;
+  }
 }

@@ -17,22 +17,6 @@
       "edited": false
     },
     {
-      "id": 0.36433326850363645,
-      "name": "preetu",
-      "email": "preetu@gamil.com",
-      "mobile": "9888889888",
-      "DOB": "31/3/2020",
-      "gender": "Male",
-      "address": {
-        "nationality": "Iceland",
-        "state": "Karnataka",
-        "city": "Bangalore",
-        "street": "Kulas Light",
-        "zipcode": "92998"
-      },
-      "edited": false
-    },
-    {
       "id": 0.6294941831889429,
       "name": "Rahul",
       "email": "rahul@gmail.com",
@@ -41,6 +25,22 @@
       "gender": "Male",
       "address": {
         "nationality": "Estonian",
+        "state": "Karnataka",
+        "city": "Bangalore",
+        "street": "Kulas Light",
+        "zipcode": "92998"
+      },
+      "edited": false
+    },
+    {
+      "id": 0.6893973882341413,
+      "name": "Raja",
+      "email": "raja@gaila.ocm",
+      "mobile": "9898988989",
+      "DOB": "6/8/2019",
+      "gender": "Male",
+      "address": {
+        "nationality": "Indian",
         "state": "Karnataka",
         "city": "Bangalore",
         "street": "Kulas Light",
