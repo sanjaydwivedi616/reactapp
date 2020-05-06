@@ -25,7 +25,7 @@ const featchUserFailure = (error) => {
 export const fetchUsers = () => {
   return (dispatch) => {
     dispatch(featchUserRequest);
-    axios.get("http://localhost:3333/todos").then(responce => {
+    axios.get("http://localhost:2000/users").then(responce => {
       const users = responce.data;
       dispatch(featchUserSuccess(users));
     }).catch(error => {
@@ -33,4 +33,4 @@ export const fetchUsers = () => {
       dispatch(featchUserFailure(errorMass));
     })
   }
-} 
+}

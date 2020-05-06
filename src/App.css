@@ -18,10 +18,8 @@
 .userData p {
   margin-bottom: 0px;
 }
-.errormsg {
+.error-msg {
   color: red;
-  font-size: 30px;
-  text-align: center;
 }
 .footer-copyright {
   background: #0e0f10 !important;
@@ -39,7 +37,8 @@
 .main-div {
   margin: 25px;
 }
-.table thead th {
+.table thead th,
+th {
   background: #007bff;
   color: #fff;
 }
@@ -108,10 +107,29 @@ button[disabled] {
 .modal-footer {
   padding: 7px !important;
 }
+.react-datepicker-wrapper {
+  width: 100%;
+}
+.card-text-right {
+  float: right;
+}
+.card-price {
+  font-size: 20px;
+  font-weight: 800;
+}
+.card-product {
+  border: 1px solid #cec9c9;
+  padding: 15px;
+  box-shadow: 0px 0px 4px 1px #cec9c9;
+}
 
 @media (min-width: 576px) {
   .modal-dialog {
     max-width: 55% !important;
     margin: 3.75rem auto !important;
+  }
+  .col-sm-6 {
+    max-width: 47% !important;
+    margin: 15px;
   }
 }

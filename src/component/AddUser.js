@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { fetchUsers } from '../redux';
+import { connect } from "react-redux";
 
 class AddUser extends Component {
   constructor(props) {
@@ -15,47 +17,119 @@ class AddUser extends Component {
       fromDate: new Date(),
       newUserGender: "",
       newUserNationality: "",
+      states: "",
+      city: "",
+      street: "",
+      zipCode: "",
+      idProof: "",
       editing: false,
+      fields: {},
+      errors: {}
     };
+  }
+
+  createUI() {
+    return this.state.users.map((el, i) => (
+      <tr key={i}>
+        <td>
+          <input type="text" className="form-control" placeholder="Name" name="name" value={el.name || ''}
+            onChange={this.handleChange.bind(this, i)} />
+        </td>
+        <td><select className="form-control" name="relation"
+          value={el.relation || ''}
+          onChange={this.handleChange.bind(this, i)}>
+          <option value=""></option>
+          <option value="Mother">Mother</option>
+          <option value="Father">Father</option>
+          <option value="Husband">Husband</option>
+          <option value="Wife">Wife</option>
+          <option value="Son">Son</option>
+          <option value="Daughter">Daughter</option>
+        </select></td>
+        <td>
+          <input type="text" className="form-control" placeholder="Id Proof" name="idProof" value={el.idProof || ''}
+            onChange={this.handleChange.bind(this, i)} />
+        </td>
+        <td>
+          <button type='button' className="delete" onClick={this.removeClick.bind(this, i)}>X</button>
+        </td>
+      </tr>
+    ))
+  }
+
+  handleChange(i, e) {
+    const { name, value } = e.target;
+    let users = [...this.state.users];
+    users[i] = { ...users[i], [name]: value };
+    this.setState({ users });
+  }
+
+  removeClick(i) {
+    let users = [...this.state.users];
+    users.splice(i, 1);
+    this.setState({ users });
+  }
+
+  formValidation = () => {
+    let errors = {};
+    let formIsValid = true;
+
+    const user = this.state;
+    if (user.newUserName === "") {
+      formIsValid = false;
+      errors["newUserName"] = "Fill User Name";
+    }
+    if (user.newUserEmail === "") {
+      formIsValid = false;
+      errors["newUserEmail"] = "Fill User Email";
+    }
+    if (user.newUserMobile === "") {
+      formIsValid = false;
+      errors["newUserMobile"] = "Fill User Mobile";
+    }
+
+    this.setState({ errors: errors });
+    return formIsValid;
   }
 
   addUserInTheList = (event) => {
     event.preventDefault();
-    const user = this.state;
-    if (user.newUserName === "" || user.newUserEmail === "" || user.newUserMobile === "") {
-      return false
-    }
-    this.state.users.map(elem => {
-      if (elem.email === user.newUserEmail) {
-        return false;
-      }
-    });
-    let UserDOB = this.state.fromDate.getDate() + "/" + (this.state.fromDate.getMonth() + 1) + "/" + this.state.fromDate.getFullYear();
-    axios.post("http://localhost:3333/todos/", {
-      id: Math.random(),
-      name: this.state.newUserName,
-      email: this.state.newUserEmail,
-      mobile: this.state.newUserMobile,
-      DOB: UserDOB,
-      gender: this.state.newUserGender,
-      address: {
-        nationality: this.state.newUserNationality,
-        state: "Karnataka",
-        city: "Bangalore",
-        street: "Kulas Light",
-        zipcode: "92998",
-      },
-      edited: false,
-    }).then(result => {
-      this.setState({
-        newUserName: "",
-        newUserEmail: "",
-        newUserMobile: "",
-        NewUserDOB: "",
-        newUserGender: "",
-        newUserNationality: "",
+
+    if (this.formValidation()) {
+      let UserDOB = this.state.fromDate.getDate() + "/" + (this.state.fromDate.getMonth() + 1) + "/" + this.state.fromDate.getFullYear();
+      axios.post("http://localhost:2000/users", {
+        _id: Math.random(),
+        name: this.state.newUserName,
+        email: this.state.newUserEmail,
+        mobile: this.state.newUserMobile,
+        DOB: UserDOB,
+        gender: this.state.newUserGender,
+        address: {
+          nationality: this.state.newUserNationality,
+          states: this.state.states,
+          city: this.state.city,
+          street: this.state.street,
+          zipCode: this.state.zipCode,
+        },
+        idProof: this.state.idProof,
+        edited: false,
+      }).then(result => {
+        this.setState({
+          newUserName: "",
+          newUserEmail: "",
+          newUserMobile: "",
+          NewUserDOB: "",
+          newUserGender: "",
+          newUserNationality: "",
+          states: "",
+          city: "",
+          street: "",
+          zipCode: "",
+          idProof: "",
+        })
+        this.props.fetchUsers();
       })
-    })
+    }
   }
 
   changeUserInput = (e) => {
@@ -83,7 +157,7 @@ class AddUser extends Component {
   DOBChange = fromDate => {
     this.setState({
       NewUserDOB: fromDate,
-      fromDate: fromDate
+      fromDate: fromDate,
     });
   }
 
@@ -95,26 +169,37 @@ class AddUser extends Component {
             <tbody>
               <tr>
                 <td>
+                  <span><b>Name:</b></span>
                   <input className="form-control" type="text" name="newUserName" value={this.state.newUserName}
-                    onChange={this.changeUserInput} placeholder="Name"
+                    onChange={this.changeUserInput} placeholder="Name" autoComplete="off"
                   />
+                  <span className="error-msg">{this.state.errors["newUserName"]}</span>
                 </td>
                 <td>
+                  <span><b>Email:</b></span>
                   <input className="form-control" type="Email" name="newUserEmail" value={this.state.newUserEmail}
-                    onChange={this.changeUserInput} placeholder="Email" />
+                    onChange={this.changeUserInput} placeholder="Email" autoComplete="off" />
+                  <span className="error-msg">{this.state.errors["newUserEmail"]}</span>
                 </td>
                 <td>
+                  <span><b>Mobile:</b></span>
                   <input className="form-control" type="text" name="newUserMobile" value={this.state.newUserMobile}
-                    onChange={this.changeUserInput} placeholder="Mobile" />
+                    onChange={this.changeUserInput} placeholder="Mobile" autoComplete="off" />
+                  <span className="error-msg">{this.state.errors["newUserMobile"]}</span>
                 </td>
                 <td>
+                  <span><b>DOB:</b></span>
                   <DatePicker className="form-control" dateFormat="dd/MM/yyyy"
                     selected={this.state.NewUserDOB}
                     onChange={this.DOBChange} maxDate={new Date()}
                     placeholderText="DD/MM/YYYY"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
                   />
                 </td>
                 <td>
+                  <span><b>Gender:</b></span>
                   <select className="form-control" name="newUserGender"
                     value={this.state.newUserGender}
                     onChange={this.changeUserInput}>
@@ -124,22 +209,67 @@ class AddUser extends Component {
                   </select>
                 </td>
                 <td>
+                  <span><b>Nationality:</b></span>
                   <select className="form-control" name="newUserNationality"
                     value={this.state.newUserNationality}
                     onChange={this.changeUserInput}>
                     <option value=""></option>
                     <option value="Indian">Indian</option>
-                    <option value="Denmark">Denmark</option>
-                    <option value="British">British</option>
-                    <option value="Estonian">Estonian</option>
-                    <option value="Finnish">Finnish</option>
-                    <option value="Iceland">Iceland</option>
                   </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span><b>State:</b></span>
+                  <select className="form-control" name="states"
+                    value={this.state.states}
+                    onChange={this.changeUserInput}>
+                    <option value=""></option>
+                    <option value="Indian">Gujarat</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                    <option value="Jharkhand">Jharkhand</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                  </select>
+                </td>
+                <td>
+                  <span><b>City:</b></span>
+                  <select className="form-control" name="city"
+                    value={this.state.city}
+                    onChange={this.changeUserInput}>
+                    <option value=""></option>
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Bhopal">Bhopal</option>
+                    <option value="Ranchi">Ranchi</option>
+                    <option value="Deharadun">Deharadun</option>
+                    <option value="Sirsha">Sirsha</option>
+                    <option value="Delhi">Delhi</option>
+                  </select>
+                </td>
+                <td>
+                  <span><b>Street:</b></span>
+                  <input className="form-control" type="text" name="street" value={this.state.street}
+                    onChange={this.changeUserInput} placeholder="Street" autoComplete="off"
+                  />
+                </td>
+                <td>
+                  <span><b>Zipe Code:</b></span>
+                  <input className="form-control" type="text" name="zipCode" value={this.state.zipCode}
+                    onChange={this.changeUserInput} placeholder="Zip Code" autoComplete="off"
+                  />
+                </td>
+                <td>
+                  <span><b>ID Proof:</b></span>
+                  <input className="form-control" type="text" name="idProof" value={this.state.idProof}
+                    onChange={this.changeUserInput} placeholder="ID Proof" autoComplete="off"
+                  />
                 </td>
                 <td>
                   <button type="submit">Add User</button>
                 </td>
               </tr>
+              {this.createUI()}
             </tbody>
           </table>
         </form>
@@ -148,4 +278,20 @@ class AddUser extends Component {
   }
 }
 
-export default AddUser;
+const mapStateToProps = state => {
+  return {
+    userData: state.user,
+    loading: state.loading
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchUsers: () => dispatch(fetchUsers())
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AddUser);
