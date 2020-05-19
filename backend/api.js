@@ -2,14 +2,7 @@ const express = require("express");
 const router = express.Router();
 const user = require("./DataModel");
 const DBConnection = require("./DBConnection")
-
-router.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', "*");
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
+const jwt = require("jsonwebtoken");
 
 router.get("/", async (req, res) => {
   try {
@@ -24,7 +17,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const newUser = {
+    const newUser = new user({
       _id: req.body._id,
       name: req.body.name,
       email: req.body.email,
@@ -40,20 +33,19 @@ router.post("/", async (req, res) => {
         street: req.body.address.street,
         zipCode: req.body.address.zipCode
       }
-    }
+    })
 
     const newUserList = await user.insertMany(newUser);
 
     res.json(newUserList)
   } catch (error) {
     res.json({
-      msg: `Data insert error!!!! ${error}`
+      msg: `Data insert error! ${error}`
     })
   }
 });
 
 router.put("/:id", async (req, res) => {
-  console.log(req.body)
   try {
     const updateUser = await user.updateOne({ _id: req.params.id },
       {
@@ -92,5 +84,6 @@ router.delete("/:id", async (req, res) => {
     })
   }
 })
+
 
 module.exports = router

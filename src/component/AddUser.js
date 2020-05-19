@@ -24,37 +24,9 @@ class AddUser extends Component {
       idProof: "",
       editing: false,
       fields: {},
-      errors: {}
+      errors: {},
+      errorsRespo: ""
     };
-  }
-
-  createUI() {
-    return this.state.users.map((el, i) => (
-      <tr key={i}>
-        <td>
-          <input type="text" className="form-control" placeholder="Name" name="name" value={el.name || ''}
-            onChange={this.handleChange.bind(this, i)} />
-        </td>
-        <td><select className="form-control" name="relation"
-          value={el.relation || ''}
-          onChange={this.handleChange.bind(this, i)}>
-          <option value=""></option>
-          <option value="Mother">Mother</option>
-          <option value="Father">Father</option>
-          <option value="Husband">Husband</option>
-          <option value="Wife">Wife</option>
-          <option value="Son">Son</option>
-          <option value="Daughter">Daughter</option>
-        </select></td>
-        <td>
-          <input type="text" className="form-control" placeholder="Id Proof" name="idProof" value={el.idProof || ''}
-            onChange={this.handleChange.bind(this, i)} />
-        </td>
-        <td>
-          <button type='button' className="delete" onClick={this.removeClick.bind(this, i)}>X</button>
-        </td>
-      </tr>
-    ))
   }
 
   handleChange(i, e) {
@@ -64,11 +36,6 @@ class AddUser extends Component {
     this.setState({ users });
   }
 
-  removeClick(i) {
-    let users = [...this.state.users];
-    users.splice(i, 1);
-    this.setState({ users });
-  }
 
   formValidation = () => {
     let errors = {};
@@ -96,8 +63,8 @@ class AddUser extends Component {
     event.preventDefault();
 
     if (this.formValidation()) {
-      let UserDOB = this.state.fromDate.getDate() + "/" + (this.state.fromDate.getMonth() + 1) + "/" + this.state.fromDate.getFullYear();
-      axios.post("http://localhost:2000/users", {
+      let UserDOB = (this.state.fromDate.getMonth() + 1) + "/" + this.state.fromDate.getDate() + "/" + this.state.fromDate.getFullYear();
+      const users = {
         _id: Math.random(),
         name: this.state.newUserName,
         email: this.state.newUserEmail,
@@ -113,21 +80,31 @@ class AddUser extends Component {
         },
         idProof: this.state.idProof,
         edited: false,
-      }).then(result => {
-        this.setState({
-          newUserName: "",
-          newUserEmail: "",
-          newUserMobile: "",
-          NewUserDOB: "",
-          newUserGender: "",
-          newUserNationality: "",
-          states: "",
-          city: "",
-          street: "",
-          zipCode: "",
-          idProof: "",
-        })
-        this.props.fetchUsers();
+      }
+      axios.post("http://localhost:2000/users", users).then(result => {
+        console.log(result.data.msg);
+
+        if (result.data.msg) {
+          this.setState({
+            errorsRespo: result.data.msg,
+          })
+        } else {
+          this.setState({
+            newUserName: "",
+            newUserEmail: "",
+            newUserMobile: "",
+            NewUserDOB: "",
+            newUserGender: "",
+            newUserNationality: "",
+            states: "",
+            city: "",
+            street: "",
+            zipCode: "",
+            idProof: "",
+            errorsRespo: ""
+          })
+          this.props.fetchUsers();
+        }
       })
     }
   }
@@ -165,6 +142,11 @@ class AddUser extends Component {
     return (
       <div>
         <form onSubmit={this.addUserInTheList}>
+          {this.state.errorsRespo ?
+            <div className="alert alert-danger">
+              <span>{this.state.errorsRespo}</span>
+            </div> : null
+          }
           <table className="table">
             <tbody>
               <tr>
@@ -189,10 +171,10 @@ class AddUser extends Component {
                 </td>
                 <td>
                   <span><b>DOB:</b></span>
-                  <DatePicker className="form-control" dateFormat="dd/MM/yyyy"
+                  <DatePicker className="form-control" dateFormat="MM/dd/yyyy"
                     selected={this.state.NewUserDOB}
                     onChange={this.DOBChange} maxDate={new Date()}
-                    placeholderText="DD/MM/YYYY"
+                    placeholderText="MM/DD/YYYY"
                     showMonthDropdown
                     showYearDropdown
                     dropdownMode="select"
@@ -269,7 +251,6 @@ class AddUser extends Component {
                   <button type="submit">Add User</button>
                 </td>
               </tr>
-              {this.createUI()}
             </tbody>
           </table>
         </form>

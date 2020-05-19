@@ -6,17 +6,21 @@ import Footer from "./component/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import UserPostDetails from "./component/UserPostDetails";
 import PageNotFound from "./component/Page-Not-Found";
-import users from "./component/Users";
+import Users from "./component/Users";
 import Product from "./component/Product";
+import CovideIndiaCase from "./component/CovideIndiaCase"
+import Login from "./component/Login";
 
 function App() {
   return (
     <div className="App">
       <Header></Header>
       <Switch>
-        <Route exact path="/" component={users}></Route>
+        <Route exact path="/" component={Login}></Route>
+        <Route exact path="/Users" component={Users}></Route>
         <Route exact path="/UserPostDetails" component={UserPostDetails}></Route>
         <Route exact path="/Product" component={Product}></Route>
+        <Route exact path="/CovideIndiaCase" component={CovideIndiaCase}></Route>
         <Route component={PageNotFound}></Route>
       </Switch>
       <Footer></Footer>

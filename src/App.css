@@ -9,6 +9,10 @@
   box-shadow: 0px 0px 3px 0px grey;
   text-align: center;
 }
+.active {
+  color: #0eec0a !important;
+  text-decoration: underline !important;
+}
 .userData img {
   display: block;
   margin: auto;
@@ -19,7 +23,23 @@
   margin-bottom: 0px;
 }
 .error-msg {
-  color: red;
+  color: #e61717;
+  font-weight: bold;
+}
+.activeCase {
+  background: #007bff;
+  color: #fff;
+  font-weight: bold;
+}
+.recoveredCase {
+  background: #169416;
+  color: #fff;
+  font-weight: bold;
+}
+.deathesCase {
+  background: #e61717;
+  color: #fff;
+  font-weight: bold;
 }
 .footer-copyright {
   background: #0e0f10 !important;
@@ -121,6 +141,16 @@ button[disabled] {
   border: 1px solid #cec9c9;
   padding: 15px;
   box-shadow: 0px 0px 4px 1px #cec9c9;
+}
+/* login Form CSS */
+
+.login-form {
+  width: 35%;
+  border: 2px solid #007bff;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 4px 1px #007bff;
+  margin: auto;
 }
 
 @media (min-width: 576px) {

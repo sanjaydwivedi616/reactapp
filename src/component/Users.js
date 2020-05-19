@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 import { connect } from "react-redux"
 import { fetchUsers } from '../redux'
 import AddUser from "./AddUser"
@@ -15,7 +16,7 @@ class Users extends Component {
       newUserEmail: "",
       newUserMobile: "",
       NewUserDOB: "",
-      fromDate: new Date(),
+      updatedDOBnew: "",
       newUserGender: "",
       newUserNationality: "",
       newUserStates: "",
@@ -114,13 +115,12 @@ class Users extends Component {
   EditUserInTheList = (event) => {
     event.preventDefault();
     let id = this.state.UpdateId;
-    let updatedDOB = this.state.fromDate.getDate() + "/" + (this.state.fromDate.getMonth() + 1) + "/" + this.state.fromDate.getFullYear();
 
     axios.put(`http://localhost:2000/users/${id}`, {
       name: this.state.newUserName,
       email: this.state.newUserEmail,
       mobile: this.state.newUserMobile,
-      DOB: updatedDOB,
+      DOB: this.state.NewUserDOB,
       gender: this.state.newUserGender,
       address: {
         nationality: this.state.newUserNationality,
@@ -174,9 +174,11 @@ class Users extends Component {
     }
   }
   DOBChange = fromDate => {
+
+    let UpadtedDOB = (fromDate.getMonth() + 1) + "/" + fromDate.getDate() + "/" + fromDate.getFullYear();
+
     this.setState({
-      NewUserDOB: fromDate,
-      fromDate: fromDate
+      NewUserDOB: UpadtedDOB,
     });
   }
 
@@ -217,15 +219,14 @@ class Users extends Component {
                       onChange={this.changeUserInput} placeholder="Mobile" autoComplete="off" />
                   </td>
                   <td>
-                    <span><b>DOB:</b></span>
-                    {/*  <DatePicker className="form-control" dateFormat="dd/MM/yyyy"
-                      selected={this.state.NewUserDOB}
+                    <span><b>DOB:</b>(MM/DD/YYYY)</span>
+                    <DatePicker className="form-control" dateFormat="MM/dd/yyyy"
+                      selected={new Date(this.state.NewUserDOB)}
                       onChange={this.DOBChange} maxDate={new Date()}
-                      placeholderText="DD/MM/YYYY"
                       showMonthDropdown
                       showYearDropdown
                       dropdownMode="select"
-                    /> */}
+                    />
                   </td>
                   <td>
                     <span><b>Gender:</b></span>

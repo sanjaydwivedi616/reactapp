@@ -34,8 +34,8 @@ class Product extends Component {
   }
 
   render() {
-    const { product } = this.state
-    console.log(product);
+    const { product } = this.state;
+
     return (
       <div className="container-fluid">
         <div className="row">
