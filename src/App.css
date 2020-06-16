@@ -27,17 +27,19 @@
   font-weight: bold;
 }
 .activeCase {
-  background: #007bff;
+  background: #007bff !important;
   color: #fff;
   font-weight: bold;
 }
 .recoveredCase {
-  background: #169416;
+  background: #169416 !important;
   color: #fff;
   font-weight: bold;
 }
-.deathesCase {
-  background: #e61717;
+
+.deathesCase,
+.delete {
+  background: #e61717 !important;
   color: #fff;
   font-weight: bold;
 }
@@ -81,9 +83,6 @@ button {
 button[disabled] {
   cursor: not-allowed;
   background: #a4a4a4;
-}
-.delete {
-  background: #e40404;
 }
 .navbar {
   margin-bottom: 20px;
@@ -141,6 +140,26 @@ button[disabled] {
   border: 1px solid #cec9c9;
   padding: 15px;
   box-shadow: 0px 0px 4px 1px #cec9c9;
+}
+
+.progress-heading {
+  background: #007bff;
+  color: #fff;
+  padding: 5px;
+}
+.progress-div {
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  box-shadow: 0px 1px 4px 0px #007bff;
+}
+.progress-bar {
+  padding: 0 23px 0px 5px;
+}
+.progress-inner {
+  margin: 10px;
+}
+.progress-inner p {
+  margin: 0px;
 }
 /* login Form CSS */
 

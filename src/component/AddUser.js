@@ -28,13 +28,13 @@ class AddUser extends Component {
       errorsRespo: ""
     };
   }
-
-  handleChange(i, e) {
-    const { name, value } = e.target;
-    let users = [...this.state.users];
-    users[i] = { ...users[i], [name]: value };
-    this.setState({ users });
-  }
+  /* 
+    handleChange(i, e) {
+      const { name, value } = e.target;
+      let users = [...this.state.users];
+      users[i] = { ...users[i], [name]: value };
+      this.setState({ users });
+    } */
 
 
   formValidation = () => {
@@ -68,6 +68,7 @@ class AddUser extends Component {
         _id: Math.random(),
         name: this.state.newUserName,
         email: this.state.newUserEmail,
+        password: "sanjay@123",
         mobile: this.state.newUserMobile,
         DOB: UserDOB,
         gender: this.state.newUserGender,
@@ -81,8 +82,7 @@ class AddUser extends Component {
         idProof: this.state.idProof,
         edited: false,
       }
-      axios.post("http://localhost:2000/users", users).then(result => {
-        console.log(result.data.msg);
+      axios.post("http://localhost:2000/users/registration", users).then(result => {
 
         if (result.data.msg) {
           this.setState({
@@ -113,13 +113,13 @@ class AddUser extends Component {
     const stringValidetion = /^[a-zA-Z\b]+$/;
     const numberValidetion = /^[0-9\b]+$/;
     let feildName = [e.target.name]
-    if (feildName == "newUserName") {
+    if (feildName === "newUserName") {
       if (e.target.value === '' || stringValidetion.test(e.target.value)) {
         this.setState({
           [e.target.name]: e.target.value.substr(0, 10)
         })
       }
-    } else if (feildName == "newUserMobile") {
+    } else if (feildName === "newUserMobile") {
       if (e.target.value === '' || numberValidetion.test(e.target.value)) {
         this.setState({
           [e.target.name]: e.target.value.substr(0, 10)

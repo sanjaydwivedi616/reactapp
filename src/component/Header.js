@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 
 class Header extends Component {
+
+  logOutUser = () => {
+    const logoutUser = localStorage.getItem("userLoginToken")
+    localStorage.clear();
+  }
+
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark nav-dark">
@@ -19,10 +25,13 @@ class Header extends Component {
           <li className="nav-item">
             <NavLink className="nav-link" to="/CovideIndiaCase">Covide 19 Case</NavLink>
           </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
           <li className="nav-item">
-            <Link className="nav-link" to="/"><span className="fa fa-sign-out"></span>Logout</Link>
+            <NavLink className="nav-link" to="/Movie_info">Movie</NavLink>
+          </li>
+        </ul>
+        <ul className="nav navbar-nav navbar-right">
+          <li className="nav-item">
+            <Link className="nav-link" to="/" onClick={this.logOutUser}><span className="fa fa-sign-out"></span>Logout</Link>
           </li>
         </ul>
       </nav>

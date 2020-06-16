@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import axios from 'axios';
 
 class Login extends Component {
 
   state = {
     email: "",
     password: "",
+    errorMsg: "",
   }
 
   changeUserInput = (e) => {
@@ -21,17 +22,36 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password,
     }
-    console.log(userCredential)
-    axios.post("http://localhost:2000/login", userCredential).then(responce => {
-      console.log(responce.data);
+    if (userCredential.email === "") {
+      this.setState({
+        errorMsg: "Fill email Id"
+      })
+      return false;
+    }
+    if (userCredential.password === "") {
+      this.setState({
+        errorMsg: "Fill password"
+      })
+      return false;
+    }
+    axios.post("http://localhost:2000/users/login", userCredential).then(responce => {
+      this.setState({
+        errorMsg: responce.data.message
+      })
+      if (responce.data.message === undefined) {
+        localStorage.setItem(`userLoginToken`, responce.data.token);
+      }
+    }).catch(error => {
+      console.log(error);
     })
   }
 
   render() {
-    const { email, password } = this.state
+    const { email, password, errorMsg } = this.state
     return (
       <div className="login-form">
         <form className="form-horizontal" onSubmit={this.userLoginValidetion}>
+          <span className="error-msg">{errorMsg}</span>
           <div className="form-group">
             <label className="control-label ">Email</label>
             <input type="email" className="form-control" placeholder="Email" name="email"

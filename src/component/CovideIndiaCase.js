@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import CovidGraphTracker from "./CovidGraphTracker";
+import PercentageProgressBar from "./PercentageProgressBar";
 
 let recoveryRateOfRecovered = [];
 let recoveryRateOfDeathas = [];
@@ -11,7 +12,8 @@ class CovideIndiaCase extends Component {
     totalCovideCasesInIndia: [],
     covideCases_time_series: [],
     loader: false,
-    error: ""
+    error: "",
+    dataShorting: false
   }
 
   getcovideCasesStateWise = async () => {
@@ -32,6 +34,67 @@ class CovideIndiaCase extends Component {
       });
     }
   }
+  shortByRecovered = (typeOfCases) => {
+    console.log(this.state.covideCasesStateWise)
+    let rowdata = this.state.covideCasesStateWise;
+
+    var shortDataAcive = rowdata.slice(0);
+    if (this.state.dataShorting === true) {
+      if (typeOfCases === "confirmed") {
+        shortDataAcive.sort(function (a, b) {
+          return a.confirmed - b.confirmed;
+        });
+      }
+
+      if (typeOfCases === "active") {
+        shortDataAcive.sort(function (a, b) {
+          return a.active - b.active;
+        });
+      }
+
+      if (typeOfCases === "recovered") {
+        shortDataAcive.sort(function (a, b) {
+          return a.recovered - b.recovered;
+        });
+      }
+
+      if (typeOfCases === "deaths") {
+        shortDataAcive.sort(function (a, b) {
+          return a.deaths - b.deaths;
+        });
+      }
+    } else {
+      if (typeOfCases === "confirmed") {
+        shortDataAcive.sort(function (a, b) {
+          return b.confirmed - a.confirmed;
+        });
+      }
+
+      if (typeOfCases === "active") {
+        shortDataAcive.sort(function (a, b) {
+          return b.active - a.active;
+        });
+      }
+
+      if (typeOfCases === "recovered") {
+        shortDataAcive.sort(function (a, b) {
+          return b.recovered - a.recovered;
+        });
+      }
+
+      if (typeOfCases === "deaths") {
+        shortDataAcive.sort(function (a, b) {
+          return b.deaths - a.deaths;
+        });
+      }
+    }
+
+    this.setState({
+      covideCasesStateWise: shortDataAcive,
+      dataShorting: !this.state.dataShorting
+    })
+  }
+
   recoveryRateOfCovidIndia = () => {
     this.state.covideCasesStateWise.map(data => {
       const totalRecoveryRate = data.recovered * (100 / data.confirmed);
@@ -53,13 +116,16 @@ class CovideIndiaCase extends Component {
   render() {
     this.recoveryRateOfCovidIndia();
     const { covideCasesStateWise, totalCovideCasesInIndia, loader, error } = this.state;
+
+    totalCovideCasesInIndia.pop();
+
     let covideCasesStateWiseList = covideCasesStateWise.filter(cases => {
       if (cases.state === "Total") {
         return totalCovideCasesInIndia.push(cases), false;
       } else {
         return cases
       }
-    })
+    });
 
     return (
       <div className="container-fluid">
@@ -86,10 +152,10 @@ class CovideIndiaCase extends Component {
                 <tr>
                   <th>NO.</th>
                   <th>State</th>
-                  <th>Confirmed Case</th>
-                  <th>Active Case</th>
-                  <th>Recovered/ Recovered %</th>
-                  <th>Deaths/Deaths %</th>
+                  <th onClick={() => this.shortByRecovered("confirmed")}>Confirmed Case</th>
+                  <th onClick={() => this.shortByRecovered("active")}>Active Case</th>
+                  <th onClick={() => this.shortByRecovered("recovered")}>Recovered/ Recovered %</th>
+                  <th onClick={() => this.shortByRecovered("deaths")}>Deaths/Deaths %</th>
                   <th>Last updated time</th>
                 </tr>
               </thead>
@@ -133,6 +199,7 @@ class CovideIndiaCase extends Component {
             </table>
           </div>
           <div className="col-sm-4">
+            <PercentageProgressBar covideCases_time_series={this.state.totalCovideCasesInIndia} />
             <CovidGraphTracker covideCases_time_series={this.state.covideCases_time_series} />
           </div>
         </div>

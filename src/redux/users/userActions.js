@@ -25,7 +25,7 @@ const featchUserFailure = (error) => {
 export const fetchUsers = () => {
   return (dispatch) => {
     dispatch(featchUserRequest);
-    axios.get("http://localhost:2000/users").then(responce => {
+    axios.get("http://localhost:2000/users/registration").then(responce => {
       const users = responce.data;
       dispatch(featchUserSuccess(users));
     }).catch(error => {

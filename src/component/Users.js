@@ -42,7 +42,7 @@ class Users extends Component {
   deleteUserToList = (id) => {
     const userDelete = window.confirm("Do you want to Delete this user?");
     if (userDelete === true) {
-      axios.delete(`http://localhost:2000/users/${id}`).then(result => {
+      axios.delete(`http://localhost:2000/users/registration/${id}`).then(result => {
         this.setState({
           newUserName: "",
           newUserEmail: "",
@@ -116,7 +116,7 @@ class Users extends Component {
     event.preventDefault();
     let id = this.state.UpdateId;
 
-    axios.put(`http://localhost:2000/users/${id}`, {
+    axios.put(`http://localhost:2000/users/registration/${id}`, {
       name: this.state.newUserName,
       email: this.state.newUserEmail,
       mobile: this.state.newUserMobile,

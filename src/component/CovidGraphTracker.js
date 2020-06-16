@@ -20,12 +20,19 @@ const state = {
 };
 
 class CovidGraphTracker extends Component {
+
   render() {
     const covideCasesDateWise = this.props.covideCases_time_series;
     covideCasesDateWise.map(cassesDate => {
       newLable.push(cassesDate.date);
       newLableData.push(cassesDate.totalconfirmed);
     })
+
+    let lastSevenDayDataLable = newLable.slice(Math.max(newLable.length - 7, 0));
+    let lastSevenDayDataName = newLableData.slice(Math.max(newLableData.length - 7, 0));
+
+    console.log(lastSevenDayDataLable)
+    console.log(lastSevenDayDataName)
 
     return (
       <div className='form_layout border-grid'>

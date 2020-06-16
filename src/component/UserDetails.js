@@ -1,6 +1,5 @@
 import React from "react";
 
-
 function UserDetails(props) {
   const { userData, selectedUserId } = props;
   return (
@@ -12,7 +11,7 @@ function UserDetails(props) {
             <button type="button" className="close" data-dismiss="modal">&times;</button>
           </div>
           <div className="modal-body">
-            {userData.users.filter(users => users._id == selectedUserId).map(filteredPerson => (
+            {userData.users.filter(users => users._id === selectedUserId).map(filteredPerson => (
               <table className="table" key={filteredPerson.id}>
                 <tbody>
                   <tr>

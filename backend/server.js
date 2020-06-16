@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/users", require("./api"));
-app.use("/login", require("./api"));
+
 
 const port = 2000;
 

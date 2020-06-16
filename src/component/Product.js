@@ -26,8 +26,8 @@ class Product extends Component {
   }
   AddProductToCurt = (id) => {
     this.state.product.filter(data => {
-      if (data.productId == id) {
-        alert(data.productId)
+      if (data.productId === id) {
+        return data.productId
       }
 
     })
