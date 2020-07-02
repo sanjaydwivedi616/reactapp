@@ -28,13 +28,13 @@ class AddUser extends Component {
       errorsRespo: ""
     };
   }
-  /* 
-    handleChange(i, e) {
-      const { name, value } = e.target;
-      let users = [...this.state.users];
-      users[i] = { ...users[i], [name]: value };
-      this.setState({ users });
-    } */
+
+  handleChange(i, e) {
+    const { name, value } = e.target;
+    let users = [...this.state.users];
+    users[i] = { ...users[i], [name]: value };
+    this.setState({ users });
+  }
 
 
   formValidation = () => {

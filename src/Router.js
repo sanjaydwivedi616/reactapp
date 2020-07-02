@@ -4,7 +4,7 @@ import UserPostDetails from "./component/UserPostDetails";
 import PageNotFound from "./component/Page-Not-Found";
 import Users from "./component/Users";
 import Product from "./component/Product";
-import CovideIndiaCase from "./component/CovideIndiaCase"
+import CovideIndiaCase from "./component/covid_cases_india/CovideIndiaCase"
 import Login from "./component/Login";
 import Movie_info from "./component/Movie_info";
 
