@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import CovidGraphTracker from "./CovidGraphTracker";
 import PercentageProgressBar from "./PercentageProgressBar";
+import Loading from "../Loading"
 
 let recoveryRateOfRecovered = [];
 let recoveryRateOfDeathas = [];
@@ -160,7 +161,7 @@ class CovideIndiaCase extends Component {
                 </tr>
               </thead>
               <tbody>
-                {loader ? <tr><td colSpan='7'>Loading...</td></tr> :
+                {loader ? <tr><td colSpan='7'><Loading /></td></tr> :
                   covideCasesStateWiseList.map((covidcase, index) => {
                     return (
                       <tr key={index}>

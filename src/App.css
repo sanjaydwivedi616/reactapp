@@ -9,9 +9,14 @@
   box-shadow: 0px 0px 3px 0px grey;
   text-align: center;
 }
-.active {
-  color: #0eec0a !important;
-  text-decoration: underline !important;
+.navbar-nav .active {
+  color: #007bff !important;
+  border-bottom: 3px solid;
+}
+.nav-link {
+  font-size: 17px;
+  color: #fff !important;
+  padding: 15px !important;
 }
 .userData img {
   display: block;
@@ -85,6 +90,7 @@ button[disabled] {
   background: #a4a4a4;
 }
 .navbar {
+  padding: 0rem 1rem !important;
   margin-bottom: 20px;
 }
 .list-group-item {
@@ -162,14 +168,19 @@ button[disabled] {
   margin: 0px;
 }
 /* login Form CSS */
-
 .login-form {
-  width: 35%;
+  width: 450px;
   border: 2px solid #007bff;
   padding: 15px;
   border-radius: 5px;
   box-shadow: 0px 1px 4px 1px #007bff;
   margin: auto;
+}
+
+@media (max-width: 767px) {
+  .login-form {
+    width: 94%;
+  }
 }
 
 @media (min-width: 576px) {

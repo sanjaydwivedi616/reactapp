@@ -3,7 +3,7 @@ import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { connect } from "react-redux"
-import { fetchUsers } from '../redux'
+import { fetchUsers } from '../../redux'
 import AddUser from "./AddUser"
 import UserDetails from "./UserDetails"
 

@@ -43,8 +43,7 @@ class CovidGraphTracker extends Component {
     let featchLastSaveDayData = () => {
       lastSevenDayDataLable = newLable.slice(Math.max(newLable.length - 7, 0));
       lastSevenDayDataName = newLableData.slice(Math.max(newLableData.length - 7, 0));
-      console.log(lastSevenDayDataLable);
-      console.log(lastSevenDayDataName);
+
       newLable = [...lastSevenDayDataLable];
       newLableData = [...lastSevenDayDataName];
       console.log(newLable);

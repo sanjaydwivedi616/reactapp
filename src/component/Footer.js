@@ -5,7 +5,7 @@ class Footer extends Component {
     return (
       <div className="footer-copyright">
         <div className="col-md-12 text-center">
-          <p>Copyright Demo © 2019. All rights reserved.</p>
+          <p>HAMAR Technology © 2020. All rights reserved.</p>
         </div>
       </div>
     );

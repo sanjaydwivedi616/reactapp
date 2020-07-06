@@ -3,7 +3,7 @@ import "./App.css";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Router from "./Router"
+import Router from "../src/component/router/Router"
 
 const App = () => {
   return (

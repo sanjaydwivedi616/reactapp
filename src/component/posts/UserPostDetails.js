@@ -1,5 +1,6 @@
 import React, { Component, lazy, Suspense } from 'react';
 import axios from 'axios';
+import Loading from '../Loading';
 const UserPost = lazy(() => import("./Userpost"));
 
 class UserPostDetails extends Component {
@@ -30,7 +31,7 @@ class UserPostDetails extends Component {
         <div className='row'>
           <div className='col-sm-6'>
             {users.length === 0 ? (
-              <div className="loaderBackground">Loadding...</div>
+              <Loading />
             ) : (
                 <ul className='list-group'>
                   {users.map(user => {
@@ -49,7 +50,7 @@ class UserPostDetails extends Component {
               )}
           </div>
           <div className='col-sm-6'>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loading />}>
               {selectedUser !== null ? <UserPost user={selectedUser} /> : null}
             </Suspense>
           </div>
