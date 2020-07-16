@@ -44,6 +44,7 @@ class Login extends Component {
       })
       if (responce.data.message === undefined) {
         localStorage.setItem(`userLoginToken`, responce.data.token);
+        localStorage.setItem(`expiresIn`, responce.data.expiresIn);
         this.loginUserRedirect();
       }
     }).catch(error => {
@@ -58,7 +59,8 @@ class Login extends Component {
   loginUserRedirect = () => {
     if (localStorage.getItem('userLoginToken')) {
       this.props.userLoginStatusTrue();
-      this.props.history.push('/users');
+      //.context.router.history.push('/users');
+      this.props.history.push('/user-list');
     }
   }
 

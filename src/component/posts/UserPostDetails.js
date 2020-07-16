@@ -1,63 +1,59 @@
-import React, { Component, lazy, Suspense } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import Loading from '../Loading';
-const UserPost = lazy(() => import("./Userpost"));
 
-class UserPostDetails extends Component {
+class UserpostDetails extends Component {
   state = {
-    users: [],
-    selectedUser: null
+    posts: [],
+    loader: false
   };
+
+  userPostList = async (id) => {
+    this.setState({
+      loader: true
+    })
+    let responce = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
+    let postData = responce.data;
+    this.setState({
+      posts: postData,
+      loader: false
+    });
+  };
+
   componentDidMount() {
-    this.UserPostsGet()
-  };
-  async UserPostsGet() {
-    let responce = await axios.get(`https://jsonplaceholder.typicode.com/users`);
-    let data = responce.data;
-    this.setState({
-      users: data,
-      selectedUser: responce.data[0]
-    });
+    const { user } = this.props;
+    this.userPostList(user.id);
   }
-  selectedList = user => {
-    this.setState({
-      selectedUser: user
-    });
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.user.id !== this.props.user.id) {
+      this.userPostList(this.props.user.id);
+    }
   }
   render() {
-    const { users, selectedUser } = this.state;
+    const { posts, loader } = this.state;
     return (
-      <div className='container-fluid'>
-        <div className='row'>
-          <div className='col-sm-6'>
-            {users.length === 0 ? (
-              <Loading />
-            ) : (
-                <ul className='list-group'>
-                  {users.map(user => {
-                    return (
-                      <li
-                        className={`list-group-item 
-                         ${user.id === selectedUser.id ? 'active' : null}`}
-                        key={user.id}
-                        onClick={() => this.selectedList(user)}
-                      >
-                        {user.name}
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-          </div>
-          <div className='col-sm-6'>
-            <Suspense fallback={<Loading />}>
-              {selectedUser !== null ? <UserPost user={selectedUser} /> : null}
-            </Suspense>
-          </div>
-        </div>
+      <div>
+        {loader ? (
+          <Loading />
+        ) : (
+            <div>
+              {posts.map(post => {
+                return (
+                  <div key={post.id} className='card'>
+                    <div className='card-body'>
+                      <h5 className='card-title'>{post.title}</h5>
+                      <hr />
+                      <p className='card-text'>{post.body.substring(0, 150)}...</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
       </div>
     );
   }
 }
 
-export default UserPostDetails;
+export default UserpostDetails;

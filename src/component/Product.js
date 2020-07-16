@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom"
 
 class Product extends Component {
 
   state = {
-    name: "sanjay"
+    name: "sanjay",
+    referrer: null
   }
 
   changeState = () => {
@@ -12,17 +14,20 @@ class Product extends Component {
     })
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState)
-      console.log("this is should component");
-    return true
+  onclickHa = () => {
+    this.setState({
+      referrer: "/Users"
+    })
   }
 
   render() {
+    const { referrer } = this.state;
+    if (referrer) return <Redirect to={referrer} />;
+
     return (
       <>
         <p>{this.state.name}</p>
-        <button onClick={this.changeState}>Click me!!!</button>
+        <button onClick={this.onclickHa}>Redirect me!!!</button>
       </>
     )
   }

@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
+import loadding from "../images/Loading.gif"
 
 const Loading = () => {
   return (
-    <div className="d-flex align-items-center text-primary">
-      <div className="spinner-border" role="status" aria-hidden="true"></div>
-      <strong>Loading...</strong>
+    <div className="loader-img">
+      <img src={loadding} />
     </div>
   );
 }

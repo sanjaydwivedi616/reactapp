@@ -131,6 +131,7 @@ class AddUser extends Component {
       })
     }
   }
+
   DOBChange = fromDate => {
     this.setState({
       NewUserDOB: fromDate,

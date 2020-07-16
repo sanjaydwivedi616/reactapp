@@ -1,57 +1,68 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import axios from 'axios';
+import Loading from '../Loading';
+import UserpostDetails from './UserPostDetails';
+const UserPost = lazy(() => import("./Userpost"));
 
 class Userpost extends Component {
   state = {
-    posts: [],
-    loader: false
-  };
-
-  userPostList = async (id) => {
-    this.setState({
-      loader: true
-    })
-    let responce = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
-    let postData = responce.data;
-    this.setState({
-      posts: postData,
-      loader: false
-    });
+    users: [],
+    selectedUser: null
   };
 
   componentDidMount() {
-    const { user } = this.props;
-    this.userPostList(user.id);
+    this.UserPostsGet()
+  };
+
+  async UserPostsGet() {
+    let responce = await axios.get(`https://jsonplaceholder.typicode.com/users`);
+    let data = responce.data;
+    this.setState({
+      users: data,
+      selectedUser: responce.data[0]
+    });
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.user.id !== this.props.user.id) {
-      this.userPostList(this.props.user.id);
-    }
+  selectedList = user => {
+    this.setState({
+      selectedUser: user
+    });
   }
+
   render() {
-    const { posts, loader } = this.state;
+    const { users, selectedUser } = this.state;
     return (
-      <div>
-        {loader ? (
-          <div className="loaderBackground">Loadding post for {this.props.user.name}...</div>
-        ) : (
-            <div>
-              {posts.map(post => {
-                return (
-                  <div key={post.id} className='card'>
-                    <div className='card-body'>
-                      <h5 className='card-title'>{post.title}</h5>
-                      <hr />
-                      <p className='card-text'>{post.body}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col-sm-6'>
+            {users.length === 0 ? (
+              <Loading />
+            ) : (
+                <ul className='list-group'>
+                  {users.map(user => {
+                    return (
+                      <li
+                        className={`list-group-item 
+                         ${user.id === selectedUser.id ? 'active' : null}`}
+                        key={user.id}
+                        onClick={() => this.selectedList(user)}
+                      >
+                        {user.name} {} {user.email}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+          </div>
+          <div className='col-sm-6'>
+            <Suspense fallback={<Loading />}>
+              {selectedUser !== null ? <UserpostDetails user={selectedUser} /> : null}
+            </Suspense>
+          </div>
+        </div>
       </div>
     );
   }
 }
+
 export default Userpost;
