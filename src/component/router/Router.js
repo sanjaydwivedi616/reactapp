@@ -2,14 +2,13 @@ import React, { Component, Suspense, lazy } from "react";
 import { Switch, Route, } from "react-router-dom";
 import { connect } from "react-redux";
 import Loading from "../Loading";
-import TestMoviewDetails from "../TestMovieDetails";
+import AddUser from "../users/AddUser";
 const Users = lazy(() => import("../users/Users"));
 const CovideIndiaCase = lazy(() => import("../covid_cases_india/CovideIndiaCase"));
 const Userpost = lazy(() => import("../posts/Userpost"));
 const Login = lazy(() => import("../Login"));
 const Product = lazy(() => import("../Product"));
 const PageNotFound = lazy(() => import("../Page-Not-Found"));
-const TestMovieList = lazy(() => import("../TestMovieList"));
 
 
 class Router extends Component {
@@ -34,8 +33,7 @@ class Router extends Component {
             :
             <Switch>
               <Route exact path="/" component={Login}></Route>
-              <Route exact path="/test-movie-list" component={TestMovieList}></Route>
-              <Route exact path="/test-movie-details" component={TestMoviewDetails}></Route>
+              <Route exact path="/add-new-user" component={AddUser}></Route>
               <Route component={PageNotFound} ></Route >
             </Switch>
         }

@@ -59,7 +59,6 @@ class Login extends Component {
   loginUserRedirect = () => {
     if (localStorage.getItem('userLoginToken')) {
       this.props.userLoginStatusTrue();
-      //.context.router.history.push('/users');
       this.props.history.push('/user-list');
     }
   }
@@ -94,7 +93,7 @@ class Login extends Component {
                   <button type="submit">Submit</button>
                 </div>
                 <div className="col-sm-5">
-                  <Link to="/Users">Sign Up User</Link>
+                  <Link to="/add-new-user">Sign Up User</Link>
                 </div>
               </div>
             </form>

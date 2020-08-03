@@ -304,7 +304,7 @@ class Users extends Component {
             </table>
           </form>
           :
-          <AddUser userlist={userData} />
+          null
         }
         <table className="table">
           <thead>

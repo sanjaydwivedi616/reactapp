@@ -46,12 +46,7 @@ class Header extends Component {
               </div>
             </> :
             <>
-              {/*   <Link className="navbar-brand" to="/"><img src={logo} alt="Logo" style={{ height: "35px" }} /></Link> */}
-              <ul className="nav navbar-nav">
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/test-movie-list">Movie Test Data</NavLink>
-                </li>
-              </ul>
+              <Link className="navbar-brand" to="/"><img src={logo} alt="Logo" style={{ height: "35px" }} /></Link>
               <ul className="nav navbar-nav ml-auto">
                 <li className="nav-item">
                   <Link className="nav-link" to="/">Login</Link>
