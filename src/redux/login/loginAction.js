@@ -1,7 +1,9 @@
 
+import { USER_LOGIN_REQUEST, USER_LOGOUT_REQUEST } from "./loginType";
+
 const logdinUserRequest = () => {
   return {
-    type: "userLogdin"
+    type: USER_LOGIN_REQUEST
   }
 }
 

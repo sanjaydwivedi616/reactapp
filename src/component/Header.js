@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import { connect } from "react-redux"
+import { USER_LOGOUT_REQUEST } from "../redux/login/loginType"
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   logOutUser = () => {
     localStorage.clear();
@@ -14,10 +12,12 @@ class Header extends Component {
   }
 
   render() {
+    let LoginData = localStorage.getItem("userLoginToken");
+
     return (
       <nav className="navbar navbar-expand-lg navbar-dark nav-dark">
         <div className="container-fluid">
-          {this.props.userLoginState.login ?
+          {LoginData ?
             <>
               <NavLink className="navbar-brand" to="/user-list"><img src={logo} alt="Logo" style={{ height: "35px" }} /></NavLink>
               <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    userLoginStatusFasle: () => dispatch({ type: 'userLogout' })
+    userLoginStatusFasle: () => dispatch({ type: USER_LOGOUT_REQUEST })
   }
 }
 

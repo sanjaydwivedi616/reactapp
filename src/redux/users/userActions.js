@@ -29,8 +29,8 @@ export const fetchUsers = () => {
       const users = responce.data;
       dispatch(featchUserSuccess(users));
     }).catch(error => {
-      const errorMass = error;
-      dispatch(featchUserFailure(errorMass));
+      const errorMsg = error;
+      dispatch(featchUserFailure(errorMsg));
     })
   }
 }

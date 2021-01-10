@@ -2,7 +2,6 @@ import React, { Component, lazy, Suspense } from 'react';
 import axios from 'axios';
 import Loading from '../Loading';
 import UserpostDetails from './UserPostDetails';
-const UserPost = lazy(() => import("./Userpost"));
 
 class Userpost extends Component {
   state = {

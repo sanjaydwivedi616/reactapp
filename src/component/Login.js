@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import Users from './users/Users';
-import { connect } from "react-redux"
+import { connect } from "react-redux";
+import { USER_LOGIN_REQUEST } from "../redux/login/loginType"
 
 class Login extends Component {
   constructor(props) {
@@ -112,7 +113,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    userLoginStatusTrue: () => dispatch({ type: 'userLogdin' })
+    userLoginStatusTrue: () => dispatch({ type: USER_LOGIN_REQUEST })
   }
 }
 

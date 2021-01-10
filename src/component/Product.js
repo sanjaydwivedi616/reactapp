@@ -1,36 +1,30 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
 
-class Product extends Component {
+function Product() {
 
-  state = {
-    name: "sanjay",
-    referrer: null
-  }
+  const [posts, setPostData] = useState([]);
 
-  changeState = () => {
-    this.setState({
-      name: "mohan"
+  useEffect(() => {
+    Axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
+      console.log(res);
+      setPostData(res.data)
+    }).catch(error => {
+      console.log(error)
     })
-  }
+  }, []);
 
-  onclickHa = () => {
-    this.setState({
-      referrer: "/Users"
-    })
-  }
-
-  render() {
-    const { referrer } = this.state;
-    if (referrer) return <Redirect to={referrer} />;
-
-    return (
-      <>
-        <p>{this.state.name}</p>
-        <button onClick={this.onclickHa}>Redirect me!!!</button>
-      </>
-    )
-  }
+  return (
+    <div>
+      <ul>
+        {posts.map(post => (
+          <li>{post.name}</li>
+        ))
+        }
+      </ul>
+      <h1>hello</h1>
+    </div>
+  )
 }
 
 export default Product;
